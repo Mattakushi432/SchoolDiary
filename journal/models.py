@@ -50,8 +50,8 @@ class Grade(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
-class Meta:
+    class Meta:
         unique_together = ('student', 'lesson')
 
-        def __str__(self):
-            return f"{self.student.username} - {self.lesson.topic}: {self.grade}"
+    def __str__(self):
+        return f"{self.student.username} - {self.lesson.topic}: {self.grade}"
