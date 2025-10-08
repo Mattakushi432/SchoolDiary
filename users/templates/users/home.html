@@ -1,0 +1,10 @@
+{% extends "users/base.html" %}
+
+{% block content %}
+  <h1>Добро пожаловать в Электронный Дневник!</h1>
+  {% if user.is_authenticated %}
+    <p>Вы вошли в систему как {{ user.get_role_display }}.</p>
+  {% else %}
+    <p>Пожалуйста, войдите или зарегистрируйтесь.</p>
+  {% endif %}
+{% endblock %}
