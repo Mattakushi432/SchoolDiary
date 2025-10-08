@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>School Diary</title>
@@ -16,7 +16,7 @@
         <span>Hello, {{ user.username }}!</span>
         <a href="{% url 'logout' %}">Exit</a>
     {% else %}
-        <a href="{% url 'login' %}">Log in</a> |
+        <a href="{% url 'login' %}">Login</a> |
         <a href="{% url 'register' %}">Register</a>
     {% endif %}
 </nav>
