@@ -74,7 +74,7 @@ def student_lesson_list(request):
     if not student:
         return HttpResponse("Please create at least one student in the admin panel.")
 
-    lessons = Lesson.objects.filter(school_class=student.school_class).order_by('-date')
+    lessons = Lesson.objects.filter(school_class__student=student).distinct().order_by('-date')
     return render(request, 'journal/student_lesson_list.html', {'lessons': lessons})
 
 def student_grade(request):

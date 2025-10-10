@@ -1,0 +1,13 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<h1>My Lessons</h1>
+<ul>
+  {% for lesson in lessons %}
+    <li>
+      {{ lesson.date }} — {{ lesson.subject.name }}: {{ lesson.topic }} ({{ lesson.school_class.name }})
+    </li>
+  {% empty %}
+    <li>No lessons found.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
