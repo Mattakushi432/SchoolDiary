@@ -1,0 +1,33 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<h1>Lesson Detail</h1>
+<p><strong>Date:</strong> {{ lesson.date }}</p>
+<p><strong>Subject:</strong> {{ lesson.subject.name }}</p>
+<p><strong>Topic:</strong> {{ lesson.topic }}</p>
+<p><strong>Class:</strong> {{ lesson.school_class.name }}</p>
+<p><a href="{% url 'teacher_lesson_list' %}">&larr; Back to lessons</a></p>
+
+<h2>Students and Grades</h2>
+<table border="1" cellpadding="6" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Student</th>
+      <th>Grade</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in student_grades %}
+      <tr>
+        <td>{{ item.student.username }}</td>
+        <td>{% if item.grade %}{{ item.grade.grade }}{% else %}-{% endif %}</td>
+        <td>
+          <a href="{% url 'set_grade' lesson.id item.student.id %}">Set/Edit grade</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="3">No students in this class.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

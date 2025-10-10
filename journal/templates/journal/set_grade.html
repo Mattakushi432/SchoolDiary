@@ -1,0 +1,14 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<h1>Set Grade</h1>
+<p><strong>Lesson:</strong> {{ lesson.subject.name }} — {{ lesson.topic }} ({{ lesson.date }})</p>
+<p><strong>Student:</strong> {{ student.username }}</p>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+</form>
+
+<p><a href="{% url 'teacher_lesson_detail' lesson.id %}">&larr; Back to lesson</a></p>
+{% endblock %}
