@@ -1,10 +1,18 @@
 {% extends "users/base.html" %}
 
 {% block content %}
-  <h1>Welcome to the School Diary!</h1>
+  <h1>Welcome to the Electronic Diary!</h1>
   {% if user.is_authenticated %}
-    <p>You are logged in as {{ user.get_role_display }}.</p>
+    <p>You are logged in as
+      {% if is_teacher %}
+        Teacher. <a href="{% url 'teacher_lessons' %}">Go to the teacher's lessons</a>
+      {% elif is_student %}
+        Студент. <a href="{% url 'student_lessons' %}">Go to my lessons</a> | <a href="{% url 'student_grades' %}">My ratings</a>
+      {% else %}
+        Unknown role.
+      {% endif %}
+    </p>
   {% else %}
-    <p>Please login or register.</p>
+    <p>Please log in or register.</p>
   {% endif %}
 {% endblock %}
