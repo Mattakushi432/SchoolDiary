@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .forms import UserRegisterForm
+from django.contrib.auth.decorators import login_required
 
 class RegisterView(CreateView):
     form_class = UserRegisterForm
@@ -15,8 +16,14 @@ class RegisterView(CreateView):
         login(self.request, user)
         return redirect('home')
 
+@login_required
 def home(request):
-    return render(request, 'users/home.html')
+    teacher = request.user.groups.filter(name='teacher').exists()
+    student = request.user.groups.filter(name='student').exists()
+    return render(request, 'users/home.html', {
+        'teacher': teacher,
+        'student': student
+    })
 
 def login_view(request):
     if request.method == 'POST':
