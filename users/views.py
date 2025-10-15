@@ -21,10 +21,11 @@ class RegisterView(CreateView):
 def home(request):
     teacher = request.user.groups.filter(name=TEACHERS_GROUP).exists()
     student = request.user.groups.filter(name=STUDENT_GROUP).exists()
-    return render(request, 'users/home.html', {
+    context = {
         'teacher': teacher,
-        'student': student
-    })
+        'student': student,
+    }
+    return render(request, 'users/home.html', context)
 
 def login_view(request):
     if request.method == 'POST':

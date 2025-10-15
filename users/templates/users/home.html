@@ -1,18 +1,19 @@
 {% extends "users/base.html" %}
 
 {% block content %}
-  <h1>Welcome to the Electronic Diary!</h1>
-  {% if user.is_authenticated %}
-    <p>You are logged in as
-      {% if is_teacher %}
-        Teacher. <a href="{% url 'teacher_lessons' %}">Go to the teacher's lessons</a>
-      {% elif is_student %}
-        Студент. <a href="{% url 'student_lessons' %}">Go to my lessons</a> | <a href="{% url 'student_grades' %}">My ratings</a>
-      {% else %}
-        Unknown role.
-      {% endif %}
-    </p>
+  <h1>Welcome to the Electronic Diary</h1>
+
+  <p>You logged in as {{ user.username }}.</p>
+
+  {% if is_teacher %}
+    <p>Your role: <strong>Teacher</strong>.</p>
+    <a href="{% url 'teacher_lessons' %}">Go to my lessons</a>
+  {% elif is_student %}
+    <p>Your role: <strong>Student</strong>.</p>
+    <a href="{% url 'student_lessons' %}">My schedule</a> |
+    <a href="{% url 'student_grades' %}">My grades</a>
   {% else %}
-    <p>Please log in or register.</p>
+    <p>Your role is not defined. Please contact the administrator..</p>
   {% endif %}
+
 {% endblock %}

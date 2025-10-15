@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, Http404
+from django.http import Http404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from users.roles import TEACHERS_GROUP, STUDENT_GROUP
 from .models import Lesson, Grade
@@ -15,20 +15,10 @@ def is_student(user):
     return user.groups.filter(name=STUDENT_GROUP).exists()
 
 
-def get_user_model():
-    teacher = User.objects.filter(role="TEACHER").first()
-    student = User.objects.filter(role="STUDENT").first()
-    return teacher, student
-
-
 @login_required
 @user_passes_test(is_teacher, login_url='/accounts/login/', redirect_field_name=None)
 def teacher_lesson_list(request):
-    teacher, _ = get_user_model()
-    if not teacher:
-        return HttpResponse("Please create at least one teacher in the admin panel.")
-
-    lessons = Lesson.objects.filter(teacher=teacher).order_by('-date')
+    lessons = Lesson.objects.filter(teacher=request.user).order_by('-date')
     return render(request, 'journal/teacher_lesson_list.html', {'lessons': lessons})
 
 
@@ -38,10 +28,12 @@ def teacher_lesson_create(request):
     if request.method == 'POST':
         form = LessonForm(request.POST)
         if form.is_valid():
-            form.save()
+            lesson = form.save(commit=False)
+            lesson.teacher = request.user
+            lesson.save()
             return redirect('teacher_lesson_list')
     else:
-        form = LessonForm()
+        form = LessonForm(initial={'teacher': request.user})
     return render(request, 'journal/teacher_lesson_form.html', {'form': form})
 
 
