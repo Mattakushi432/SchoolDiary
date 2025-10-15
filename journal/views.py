@@ -1,17 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required, user_passes_test
+from users.roles import TEACHERS_GROUP, STUDENT_GROUP
 from .models import Lesson, Grade
 from .forms import LessonForm, GradeForm
 from users.models import User
 
 
 def is_teacher(user):
-    return user.groups.filter(name='teacher').exists()
+    return user.groups.filter(name=TEACHERS_GROUP).exists()
 
 
 def is_student(user):
-    return user.groups.filter(name='student').exists()
+    return user.groups.filter(name=STUDENT_GROUP).exists()
 
 
 def get_user_model():
@@ -89,7 +90,7 @@ def set_grade(request, lesson_id, student_id):
 
 
 @login_required
-@user_passes_test(is_student(), login_url='/accounts/login/', redirect_field_name=None)
+@user_passes_test(is_student, login_url='/accounts/login/', redirect_field_name=None)
 def student_lesson_list(request):
     _, student = get_user_model()
     if not student:
@@ -100,7 +101,7 @@ def student_lesson_list(request):
 
 
 @login_required
-@user_passes_test(is_student(), login_url='/accounts/login/', redirect_field_name=None)
+@user_passes_test(is_student, login_url='/accounts/login/', redirect_field_name=None)
 def student_grade(request):
     _, student = get_user_model()
     if not student:
