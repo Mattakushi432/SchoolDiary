@@ -84,22 +84,17 @@ def set_grade(request, lesson_id, student_id):
 @login_required
 @user_passes_test(is_student, login_url='/accounts/login/', redirect_field_name=None)
 def student_lesson_list(request):
-    _, student = get_user_model()
-    if not student:
-        return HttpResponse("Please create at least one student in the admin panel.")
-
-    lessons = Lesson.objects.filter(school_class__student=student).distinct().order_by('-date')
+    student_class = request.user.school_class.first()
+    if not student_class:
+        return Http404("You are not assigned to any class")
+    lessons = Lesson.objects.filter(school_class_student=student_class).distinct().order_by('-date')
     return render(request, 'journal/student_lesson_list.html', {'lessons': lessons})
 
 
 @login_required
 @user_passes_test(is_student, login_url='/accounts/login/', redirect_field_name=None)
 def student_grade(request):
-    _, student = get_user_model()
-    if not student:
-        return HttpResponse("Please create at least one student in the admin panel.")
-
-    grades = Grade.objects.filter(student=student).select_related('lesson').order_by('-lesson__date')
+    grades = Grade.objects.filter(student=request.user).select_related('lesson').order_by('-lesson__date')
     return render(request, 'journal/student_grade.html', {'grades': grades})
 
 
