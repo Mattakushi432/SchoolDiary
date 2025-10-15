@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
-from .roles import TEACHERS_GROUP, STUDENT_GROUP
+from .roles import TEACHERS_GROUP, STUDENTS_GROUP
 
 class RegisterView(CreateView):
     form_class = UserRegisterForm
@@ -20,7 +20,7 @@ class RegisterView(CreateView):
 @login_required
 def home(request):
     teacher = request.user.groups.filter(name=TEACHERS_GROUP).exists()
-    student = request.user.groups.filter(name=STUDENT_GROUP).exists()
+    student = request.user.groups.filter(name=STUDENTS_GROUP).exists()
     context = {
         'teacher': teacher,
         'student': student,
