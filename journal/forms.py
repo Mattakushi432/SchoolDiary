@@ -16,7 +16,6 @@ class LessonForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Filter teacher field to only show users in teachers group
         try:
             teachers_group = Group.objects.get(name=TEACHERS_GROUP)
             self.fields['teacher'].queryset = User.objects.filter(groups=teachers_group)
