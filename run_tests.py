@@ -1,8 +1,4 @@
 #!/usr/bin/env python
-"""
-Simple test runner script for the journal app tests.
-Run this after activating your virtual environment and installing Django.
-"""
 import os
 import sys
 import django
