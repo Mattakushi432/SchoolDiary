@@ -1,0 +1,127 @@
+[
+  {
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+      "name": "teachers",
+      "permissions": []
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+      "name": "students",
+      "permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "username": "teacher_test",
+      "email": "teacher@example.com",
+      "first_name": "John",
+      "last_name": "Teacher",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "groups": [1],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "username": "student1_test",
+      "email": "student1@example.com",
+      "first_name": "Alice",
+      "last_name": "Student",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "groups": [2],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "username": "student2_test",
+      "email": "student2@example.com",
+      "first_name": "Bob",
+      "last_name": "Student",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "groups": [2],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "journal.subject",
+    "pk": 1,
+    "fields": {
+      "name": "Mathematics"
+    }
+  },
+  {
+    "model": "journal.subject",
+    "pk": 2,
+    "fields": {
+      "name": "Physics"
+    }
+  },
+  {
+    "model": "journal.schoolclass",
+    "pk": 1,
+    "fields": {
+      "name": "Class 10A",
+      "student": [2, 3]
+    }
+  },
+  {
+    "model": "journal.lesson",
+    "pk": 1,
+    "fields": {
+      "topic": "Algebra Fundamentals",
+      "subject": 1,
+      "school_class": 1,
+      "teacher": 1,
+      "homework": "Complete exercises 1-15 from chapter 3",
+      "date": "2024-11-01"
+    }
+  },
+  {
+    "model": "journal.lesson",
+    "pk": 2,
+    "fields": {
+      "topic": "Quadratic Equations",
+      "subject": 1,
+      "school_class": 1,
+      "teacher": 1,
+      "homework": "Solve problems 20-30",
+      "date": "2024-11-02"
+    }
+  },
+  {
+    "model": "journal.grade",
+    "pk": 1,
+    "fields": {
+      "student": 2,
+      "lesson": 1,
+      "grade": 8
+    }
+  },
+  {
+    "model": "journal.grade",
+    "pk": 2,
+    "fields": {
+      "student": 3,
+      "lesson": 1,
+      "grade": 9
+    }
+  }
+]
