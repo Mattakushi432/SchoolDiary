@@ -8,7 +8,6 @@ class SchoolClass(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name="Class name")
     student = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        limit_choices_to={'role': 'STUDENT'},
         related_name='classes'
     )
 
@@ -27,7 +26,6 @@ class Lesson(models.Model):
     school_class = models.ForeignKey(SchoolClass, on_delete=models.CASCADE, related_name='lessons')
     teacher = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        limit_choices_to={'role': 'TEACHER'},
         on_delete=models.CASCADE,
         related_name='lessons'
     )
